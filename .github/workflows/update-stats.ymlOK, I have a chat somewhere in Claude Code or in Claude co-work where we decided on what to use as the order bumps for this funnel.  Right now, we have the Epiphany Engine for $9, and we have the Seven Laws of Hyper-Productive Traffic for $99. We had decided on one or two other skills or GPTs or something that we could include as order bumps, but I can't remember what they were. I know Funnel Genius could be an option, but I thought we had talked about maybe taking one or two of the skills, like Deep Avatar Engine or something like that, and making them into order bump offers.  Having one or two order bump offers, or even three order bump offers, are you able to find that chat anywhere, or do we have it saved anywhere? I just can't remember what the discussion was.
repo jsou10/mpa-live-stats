@@ -1,0 +1,32 @@
+name: Update stats
+on:
+  schedule:
+    - cron: "7 * * * *"   # hourly at :07
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-stats
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch stats from Meta
+        env:
+          META_TOKEN_SSS: ${{ secrets.META_TOKEN_SSS }}
+          META_TOKEN_MPA: ${{ secrets.META_TOKEN_MPA }}
+          META_TOKEN_CK: ${{ secrets.META_TOKEN_CK }}
+        run: python3 fetch_stats.py
+      - name: Commit stats.json
+        run: |
+          git config user.name "stats-bot"
+          git config user.email "stats-bot@users.noreply.github.com"
+          git add stats.json
+          git commit -m "stats $(date -u +%Y-%m-%dT%H:%MZ)" || echo "no change"
+          git push
