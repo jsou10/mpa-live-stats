@@ -1,10 +1,10 @@
 {
  "window": "last_30d",
- "spend": 339986,
- "leads": 28912,
- "registrations": 32452,
- "purchases": 2517,
+ "spend": 335865,
+ "leads": 28759,
+ "registrations": 32268,
+ "purchases": 2401,
  "accounts": 23,
  "account_errors": 0,
- "generated_at": "2026-09-16T00:11:13Z"
+ "generated_at": "2026-09-16T05:55:07Z"
 }
